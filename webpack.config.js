@@ -1,14 +1,15 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 // 次の行になにもない場合もカンマを付けてあげる
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/javascripts/main.js',
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: 'main.js'
+        filename: 'javascripts/main.js'
     },
     module: {
         rules: [
@@ -29,10 +30,13 @@ module.exports = {
         ],
     },
     plugins: [
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: './stylesheets/main.css',
+        }),
         new HtmlWebpackPlugin({
             // templateに設定したhtml要素にcss,jsのビルドされた内容が格納される親のような役割
-            template: './src/index.html',
+            template: './src/templates/index.html',
         }),
+        new CleanWebpackPlugin(),
     ],
 }
