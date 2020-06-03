@@ -1,4 +1,6 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // 次の行になにもない場合もカンマを付けてあげる
 
@@ -17,7 +19,7 @@ module.exports = {
                 use: [
                     // ローダーは下から上に適用されていく
                     {
-                        loader: 'style-loader',
+                        loader: MiniCssExtractPlugin.loader,
                     },
                     {
                         loader: 'css-loader',
@@ -26,4 +28,11 @@ module.exports = {
             },
         ],
     },
+    plugins: [
+        new MiniCssExtractPlugin(),
+        new HtmlWebpackPlugin({
+            // templateに設定したhtml要素にcss,jsのビルドされた内容が格納される親のような役割
+            template: './src/index.html',
+        }),
+    ],
 }
