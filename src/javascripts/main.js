@@ -2,5 +2,13 @@ import './reactApp.jsx';
 import my from './my.js';
 import '../stylesheets/main.scss';
 
-console.log('webpack!');
+import Vue from 'vue';
+import VueApp from './vueApp.vue';
+
+new Vue({
+  el: '#vue-root',
+  render: (h) => h(VueApp),
+});
+
+console.log('This is index.js');
 my();

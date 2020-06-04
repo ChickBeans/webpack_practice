@@ -2,6 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 // 次の行になにもない場合もカンマを付けてあげる
 
@@ -17,6 +18,15 @@ module.exports = {
     },
     module: {
         rules: [
+            {
+                test: /\.vue/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'vue-loader',
+                    },
+                ],
+            },
             {
                 test: /\.js/,
                 exclude: /\node_modules/, // npm対象外
@@ -94,6 +104,7 @@ module.exports = {
         ],
     },
     plugins: [
+        new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             filename: './stylesheets/main.css',
         }),
