@@ -34,9 +34,24 @@ module.exports = {
                         loader: 'file-loader',
                         options: {
                             esModule: false,
+                            // 画像名と拡張子をそれぞれ保つ
                             name: 'images/[name].[ext]',
                         },
                     },
+                ],
+            },
+            {
+                test: /\.pug/,
+                use: [
+                    {
+                        loader: 'html-loader',
+                    },
+                    {
+                        loader: 'pug-html-loader',
+                        options: {
+                            pretty: true,
+                        }
+                    }
                 ],
             },
         ],
@@ -47,7 +62,13 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             // templateに設定したhtml要素にcss,jsのビルドされた内容が格納される親のような役割
-            template: './src/templates/index.html',
+            template: './src/templates/index.pug',
+            filename: 'index.html',
+        }),
+        new HtmlWebpackPlugin({
+            // templateに設定したhtml要素にcss,jsのビルドされた内容が格納される親のような役割
+            template: './src/templates/access.pug',
+            filename: "access.html",
         }),
         new CleanWebpackPlugin(),
     ],
