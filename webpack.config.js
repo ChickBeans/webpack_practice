@@ -19,6 +19,7 @@ module.exports = {
     module: {
         rules: [
             {
+                // typescript
                 test: /\.(ts|tsx)/,
                 exclude: /node_modules/,
                 use: [
@@ -28,6 +29,7 @@ module.exports = {
                 ],
             },
             {
+                // ES6のトランスパイル
                 test: /\.js/,
                 exclude: /\node_modules/, // npm対象外
                 use: [
@@ -65,6 +67,7 @@ module.exports = {
                 ],
             },
             {
+                // 画像を自動で圧縮
                 test: /\.(png|jpg|jpeg)/,
                 use: [
                     {
@@ -89,6 +92,7 @@ module.exports = {
                 ],
             },
             {
+                // パグを用いたhtmlの記述
                 test: /\.pug/,
                 use: [
                     {
