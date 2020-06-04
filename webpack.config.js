@@ -2,7 +2,6 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 // 次の行になにもない場合もカンマを付けてあげる
 
@@ -24,15 +23,6 @@ module.exports = {
                 use: [
                     {
                         loader: 'ts-loader',
-                    },
-                ],
-            },
-            {
-                test: /\.vue/,
-                exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'vue-loader',
                     },
                 ],
             },
@@ -82,6 +72,7 @@ module.exports = {
                             esModule: false,
                             // 画像名と拡張子をそれぞれ保つ
                             name: 'images/[name].[ext]',
+                            publicPath: '/',
                         },
                     },
                     {
@@ -113,7 +104,6 @@ module.exports = {
         ],
     },
     plugins: [
-        new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             filename: './stylesheets/main.css',
         }),
