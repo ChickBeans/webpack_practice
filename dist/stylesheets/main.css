@@ -1,4 +1,12 @@
 body {
-  color: aqua;
-}
+  color: aqua; }
 
+a {
+  text-decoration: none;
+  color: blue;
+  transform: all 2s; }
+  a:hover {
+    color: grey; }
+
+
+/*# sourceMappingURL=main.css.map*/

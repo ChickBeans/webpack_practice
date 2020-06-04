@@ -6,6 +6,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // 次の行になにもない場合もカンマを付けてあげる
 
 module.exports = {
+    // ビルド設定、デフォルトはproduction
+    mode: 'development',
+    // 読みやすいコードに変換
+    devtool: 'source-map',
     entry: './src/javascripts/main.js',
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -14,8 +18,24 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.js/,
+                exclude: /\node_modules/, // npm対象外
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            // babelのライブラリを束ねているプリセット
+                            presets: [
+                                ['@babel/preset-env', { 'targets': '> 30%, not dead' }],
+                                '@babel/preset-react',
+                            ],
+                        },
+                    },
+                ],
+            },
+            {
                 // test：ファイル名を検知する
-                test: /\.css/,
+                test: /\.(css|sass|scss)/,
                 // use：どのローダーを使うか
                 use: [
                     // ローダーは下から上に適用されていく
@@ -24,11 +44,18 @@ module.exports = {
                     },
                     {
                         loader: 'css-loader',
+                        options: {
+                            // devtoolでsassファイルを表示できる 重い
+                            sourceMap: true,
+                        },
+                    },
+                    {
+                        loader: 'sass-loader',
                     },
                 ],
             },
             {
-                test: /\.(png|jpg)/,
+                test: /\.(png|jpg|jpeg)/,
                 use: [
                     {
                         loader: 'file-loader',
@@ -36,6 +63,16 @@ module.exports = {
                             esModule: false,
                             // 画像名と拡張子をそれぞれ保つ
                             name: 'images/[name].[ext]',
+                        },
+                    },
+                    {
+                        // ファイルサイズの圧縮する
+                        loader: 'image-webpack-loader',
+                        options: {
+                            mozjpeg: {
+                                progressive: true,
+                                quality: 65,
+                            },
                         },
                     },
                 ],
@@ -60,6 +97,8 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: './stylesheets/main.css',
         }),
+
+        // pugファイルをhtmlに変換して出力してくれる
         new HtmlWebpackPlugin({
             // templateに設定したhtml要素にcss,jsのビルドされた内容が格納される親のような役割
             template: './src/templates/index.pug',
@@ -69,6 +108,11 @@ module.exports = {
             // templateに設定したhtml要素にcss,jsのビルドされた内容が格納される親のような役割
             template: './src/templates/access.pug',
             filename: "access.html",
+        }),
+        new HtmlWebpackPlugin({
+            // templateに設定したhtml要素にcss,jsのビルドされた内容が格納される親のような役割
+            template: './src/templates/members/taro.pug',
+            filename: "members/taro.html", //出力後
         }),
         new CleanWebpackPlugin(),
     ],
